@@ -11,8 +11,8 @@
     "security-check": "nsp check",
     "localtunnel": "lt --port 3000",
     "share": "npm-run-all --parallel open:src localtunnel",
-    "test" : "mocha --reporter progress buildscripts/testSetup.js \"src/**/*.test.js\"",
-    "test:watch" : "npm run test -- --watch",
+    "test": "mocha --reporter progress buildscripts/testSetup.js \"src/**/*.test.js\"",
+    "test:watch": "npm run test -- --watch",
     "generate-mock-data": "babel-node buildscripts/generateMockData",
     "prestart-mockapi": "npm run generate-mock-data",
     "start-mockapi": "json-server --watch src/api/db.json --port 3001",
@@ -24,6 +24,13 @@
   "author": "Cory House",
   "license": "MIT",
   "dependencies": {
+    "babel-preset-react": "^6.24.1",
+    "bootstrap": "^4.0.0",
+    "eslint-plugin-react": "^7.7.0",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {
