@@ -5,7 +5,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 
-function FaultControl(props) {
+function ToggleControl(props) {
   if (props.active === true) {
     return (
       <button type="button" className="btn btn-info btn-block active" onClick={props.onClick}>
@@ -22,21 +22,18 @@ function FaultControl(props) {
   }
 }
 
-class FaultControls extends React.Component {
+class DeviceControls extends React.Component {
   constructor(props) {
     super(props);
-    let state = {
-      faultControls: []
-    };
-    this.state = FaultControls.getDerivedStateFromProps(props, null);
+    this.state = DeviceControls.getDerivedStateFromProps(props, null);
   }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
+  
+  static getDerivedStateFromProps(nextProps, prevState) { // eslint-disable-line no-unused-vars
     let newState = {
-      faultControls: []
+      deviceControls: []
     };
     nextProps.controls.map( (control) => {
-      newState.faultControls.push({
+      newState.deviceControls.push({
         name: control.name,
         active: control.value === 0 ? false : true
       });
@@ -44,12 +41,11 @@ class FaultControls extends React.Component {
     return newState;
   }
 
-
   onClick(i) {
-    let newFaultControls = this.state.faultControls
-    newFaultControls[i].active = newFaultControls[i].active ? false : true;
+    let newDeviceControls = this.state.deviceControls
+    newDeviceControls[i].active = newDeviceControls[i].active ? false : true;
     this.setState({
-      faultControls: newFaultControls
+      faultControls: newDeviceControls
     });
   }
 
@@ -57,8 +53,8 @@ class FaultControls extends React.Component {
     return (
       <div className = "btn-group-vertical btn-block">
         {
-          this.state.faultControls.map( (control, index) => 
-              <FaultControl 
+          this.state.deviceControls.map( (control, index) => 
+              <ToggleControl 
                 key={index} 
                 id={index} 
                 active={control.active} 
@@ -80,7 +76,7 @@ class DeviceControl extends React.Component {
     };
     this.state = state;
 
-    getDeviceInfo(props.id).then( result => {
+    getDeviceInfo(props.id).then( result => { //eslint-disable-line react/prop-types
       let newState = {};
       newState.name = result.name;
       newState.controls = result.controls
@@ -88,11 +84,9 @@ class DeviceControl extends React.Component {
     });
   }
 
-
-
   render() {
     return (
-      <div className="bg-dark text-light">
+      <div className="bg-dark text-light h-100">
         <div className="row bg-dark text-light">
           <div className="col" >
             <h1> {this.state.name}  {this.props.id} </h1>
@@ -103,17 +97,21 @@ class DeviceControl extends React.Component {
             <div className="row"> <div className="col"> Controls </div></div>
             <div className="row"> 
               <div className="col">
-                <FaultControls controls={this.state.controls} />
+                <DeviceControls controls={this.state.controls} />
               </div>
             </div>
           </div>
           <div className="col-9" >
             <div className="row">
-              Terminal
-              <textarea readOnly="true" className="form-control bg-dark text-white" rows="10"/>
+              <div className="col-9">
+                Terminal
+                <textarea readOnly="true" className="form-control bg-dark text-white" rows="10" />
+              </div>
             </div>
             <div className="row">
-              <input className="form-control bg-dark text-white" placeholder="enter command"/>
+              <div className="col-9">
+                <input className="form-control bg-dark text-white" placeholder="enter command" />
+              </div>
             </div>
           </div>
         </div>
@@ -122,8 +120,7 @@ class DeviceControl extends React.Component {
   }
 }
 
-DeviceControl.defaultProps =
-{
+DeviceControl.defaultProps = {
   id: null
 };
 
