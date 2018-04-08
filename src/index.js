@@ -8,14 +8,14 @@ import ReactDOM from 'react-dom'
 function FaultControl(props) {
   if (props.active === true) {
     return (
-      <button type="button" className="btn btn-primary active" data-toggle="button" aria-pressed="true" onClick={props.onClick}>
+      <button type="button" className="btn btn-info btn-block active" onClick={props.onClick}>
         {props.name} On
       </button>
     );
   }
   else {
     return (
-      <button type="button" className="btn btn-primary" data-toggle="button" aria-pressed="false" onClick={props.onClick}>
+      <button type="button" className="btn btn-secondary btn-block" onClick={props.onClick}>
         {props.name} Off
       </button>
     );
@@ -55,7 +55,7 @@ class FaultControls extends React.Component {
 
   render() {
     return (
-      <div className = "btn-group-vertical">
+      <div className = "btn-group-vertical btn-block">
         {
           this.state.faultControls.map( (control, index) => 
               <FaultControl 
@@ -89,22 +89,45 @@ class DeviceControl extends React.Component {
   }
 
 
+
   render() {
     return (
-      <div className="row">
-        <div className="col-3" >
-          <FaultControls controls={this.state.controls}/> 
+      <div className="bg-dark text-light">
+        <div className="row bg-dark text-light">
+          <div className="col" >
+            <h1> {this.state.name}  {this.props.id} </h1>
+          </div>
         </div>
-        <div className="col-9" >
-          100%
+        <div className="row">
+          <div className="col-3" >
+            <div className="row"> <div className="col"> Controls </div></div>
+            <div className="row"> 
+              <div className="col">
+                <FaultControls controls={this.state.controls} />
+              </div>
+            </div>
+          </div>
+          <div className="col-9" >
+            <div className="row">
+              Terminal
+              <textarea readOnly="true" className="form-control bg-dark text-white" rows="10"/>
+            </div>
+            <div className="row">
+              <input className="form-control bg-dark text-white" placeholder="enter command"/>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 }
 
+DeviceControl.defaultProps =
+{
+  id: null
+};
 
 ReactDOM.render(
-  <DeviceControl id = "1"/>,
+  <DeviceControl id="1"/>,
   document.getElementById('root')
 );

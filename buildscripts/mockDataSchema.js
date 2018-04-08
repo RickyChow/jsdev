@@ -22,8 +22,8 @@ export const schema = {
           },
           "controls": {
             "type": "array",
-            "minItems": 0,
-            "maxItems": 10,
+            "minItems": 5,
+            "maxItems": 20,
             "items": {
               "type": "object",
               "required": ["name", "controlType", "enabled", "value"],
